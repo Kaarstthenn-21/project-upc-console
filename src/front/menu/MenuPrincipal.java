@@ -1,12 +1,14 @@
 package front.menu;
 
-public class MenuPrincipal {
-    public static boolean  esAdministrador = true;
+import java.io.IOException;
 
-    public static void mostrarMenuPrincipal(){
-        if(MenuPrincipal.esAdministrador){
+public class MenuPrincipal {
+    public static boolean esAdministrador = true;
+
+    public static void mostrarMenuPrincipal() throws IOException {
+        if (MenuPrincipal.esAdministrador) {
             MenuLogin.mostrarMenuAdmin();
-        }else {
+        } else {
             MenuLogin.mostrarMenuUsuario();
         }
     }

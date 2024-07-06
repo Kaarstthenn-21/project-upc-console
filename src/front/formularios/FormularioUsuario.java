@@ -93,7 +93,7 @@ public class FormularioUsuario {
             String apellidos = teclado.get("APELLIDOS: ");
             String usuarios = teclado.get("USUARIO: ");
             String contraseñas = teclado.get("CONTRASEÑA: ");
-            String cargos = teclado.getCargo("CARGO (ADMINISTRADOR | CONSUMIDOR): ");
+            String cargos = teclado.getCargo("CARGO (ADMINISTRADOR | TRABAJADOR): ");
             usuario.codigo = codigo.toUpperCase();
             usuario.nombres = nombre.toUpperCase();
             usuario.apellidos = apellidos.toUpperCase();
@@ -120,9 +120,5 @@ public class FormularioUsuario {
                 MenuPrincipal.mostrarMenuPrincipal();
                 break;
         }
-    }
-
-    public static void loginUsuario(String cargo) throws IOException {
-
     }
 }

@@ -54,6 +54,20 @@ public class Teclado {
         }
         return s1;
     }
+    public String getString2(String titulo) {
+        String input = "";
+        while (input.isEmpty()) {
+            System.out.println("\t" + titulo);
+            System.out.print("\t");
+
+            input = sc.nextLine().trim(); // Leer la entrada y eliminar espacios en blanco al inicio y al final
+
+            if (input.isEmpty()) {
+                System.out.println("El campo no puede estar vacío. Inténtelo de nuevo.");
+            }
+        }
+        return input;
+    }
 
     /**
      * Obtiene un entero desde el telcado a traves de la consola, unicamente
@@ -175,12 +189,42 @@ public class Teclado {
         while (s1.equals("")) {
             System.out.print("\t"+titulo);         
             s1 = sc.nextLine().toUpperCase(); // "Hola"
-            if (!s1.matches("^((CONSUMIDOR|ADMINISTRADOR))$")) { // 455
-                System.out.println("\tSolo se permite Administrador o Consumidor");
+            if (!s1.matches("^((TRABAJADOR|ADMINISTRADOR))$")) { // 455
+                System.out.println("\tSolo se permite Administrador o TRABAJADOR");
                 s1 = "";
             }
         }
         return s1;
         
+    }
+
+    public String getHora(String titulo) {
+        String hora = "";
+        while (hora.equals("")) {
+            System.out.print("\t" + titulo);
+            hora = sc.nextLine().trim();
+
+            // Validar el formato HH:MM
+            if (!hora.matches("^([01]?[0-9]|2[0-3]):[0-5][0-9]$")) {
+                System.out.println("\tFormato de hora incorrecto. Debe ser HH:MM");
+                hora = "";
+            }
+        }
+        return hora;
+    }
+
+    public String getTipoAsistencia(String titulo) {
+        String tipoAsistencia = "";
+        while (tipoAsistencia.equals("")) {
+            System.out.print("\t" + titulo);
+            tipoAsistencia = sc.nextLine().trim();
+
+            // Validar que sea "Presencial" o "Remoto", indistintamente de mayúsculas o minúsculas
+            if (!tipoAsistencia.equalsIgnoreCase("Presencial") && !tipoAsistencia.equalsIgnoreCase("Remoto")) {
+                System.out.println("\tTipo de asistencia incorrecto. Debe ser 'Presencial' o 'Remoto'.");
+                tipoAsistencia = "";
+            }
+        }
+        return tipoAsistencia;
     }
 }
