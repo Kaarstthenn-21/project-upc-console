@@ -12,4 +12,15 @@ public class MenuUsuario {
         Pantalla.crearMenu("Listar usuarios");
         FormularioUsuario.mostrarFormularioListar();
     }
+    public static void mostrarMenuBuscarUsuarios () throws IOException{
+        Pantalla.limpiarPantalla();
+        Pantalla.crearMenu("Buscar Usuarios");
+        FormularioUsuario.mostrarFormularioBuscar();
+    }
+
+    public static void mostrarMenuAgregarUsuarios() throws IOException {
+        Pantalla.limpiarPantalla();
+        Pantalla.crearMenu("Agregar Usuarios");
+        FormularioUsuario.mostrarFormularioAgregar();
+    }
 }

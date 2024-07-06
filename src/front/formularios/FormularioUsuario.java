@@ -1,5 +1,6 @@
 package front.formularios;
 
+import back.dao.UsuarioDAO;
 import back.entidades.Usuario;
 import front.menu.MenuPrincipal;
 import front.util.Pantalla;
@@ -10,16 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FormularioUsuario {
-
-    public static List<Usuario> listaUsuario = new ArrayList<Usuario>();
-
     public static void mostrarFormularioListar() throws IOException {
 
         String[] titulos = {"CODIGO", "NOMBRES", "APELLIDOS", "USUARIO", "CLAVE", "CARGO"};
-        Integer[] anchos = {10, 20, 20, 20, 20, 10};
+        Integer[] anchos = {10, 25, 25, 25, 25, 15};
 
         Pantalla.crearCabeceraTabla(titulos, anchos);
-        List<Usuario> listaUsuario = new ArrayList<Usuario>();
+        List<Usuario> listaUsuario = UsuarioDAO.listar();
 
         Usuario usuario;
         for (int i = 0; i < listaUsuario.size(); i++) {
@@ -42,6 +40,7 @@ public class FormularioUsuario {
             default:
 
         }
+
     }
 
     public static void mostrarFormularioBuscar() throws IOException {
@@ -50,24 +49,22 @@ public class FormularioUsuario {
         List<Usuario> listaBuscada;
         Usuario usuario = new Usuario();
 
-        boolean existeNombre = usuarioNombreExiste(listaUsuario, Nombre);
+        if (UsuarioDAO.exist(Nombre)) {
+            listaBuscada = UsuarioDAO.BuscarNombre(Nombre);
+            String[] titulos = {"CODIGO", "NOMBRES", "APELLIDOS", "USUARIO", "CLAVE", "CARGO"};
+            Integer[] anchos = {10, 20, 20, 20, 20, 10};
+            Pantalla.crearCabeceraTabla(titulos, anchos);
 
-//        if (existeNombre) {
-//            listaBuscada = UsuarioDAO.BuscarNombre(Nombre);
-//            String[] titulos = {"CODIGO", "NOMBRES", "APELLIDOS", "USUARIO", "CLAVE", "CARGO"};
-//            Integer[] anchos = {10, 20, 20, 20, 20, 10};
-//            Pantalla.crearCabeceraTabla(titulos, anchos);
-//
-//            for (int i = 0; i < listaBuscada.size(); i++) {
-//                usuario = listaBuscada.get(i);
-//                String[] data = {usuario.codigo, usuario.nombres, usuario.apellidos, usuario.usuario, usuario.contraseña, usuario.cargo};
-//                Pantalla.crearContenidoTabla(data, anchos);
-//            }
-//
-//        } else {
-//            System.out.println("\tEl nombre del usuario ingresado no exite en la base de datos");
-//
-//        }
+            for (int i = 0; i < listaBuscada.size(); i++) {
+                usuario = listaBuscada.get(i);
+                String[] data = {usuario.codigo, usuario.nombres, usuario.apellidos, usuario.usuario, usuario.contraseña, usuario.cargo};
+                Pantalla.crearContenidoTabla(data, anchos);
+            }
+
+        } else {
+            System.out.println("\tEl nombre del usuario ingresado no exite en la base de datos");
+
+        }
         System.out.println("");
         Pantalla.crearOpcionMenu("1", "Volver a realizar la acción");
         Pantalla.crearOpcionMenu("0", "Regresar al Menu Principal");
@@ -87,12 +84,10 @@ public class FormularioUsuario {
     public static void mostrarFormularioAgregar() throws IOException {
         Teclado teclado = new Teclado();
         Usuario usuario = new Usuario();
-//        List<Usuario> listaUsuario = UsuarioDAO.listar();
+        List<Usuario> listaUsuario = UsuarioDAO.listar();
         String codigo = teclado.getCodigoU("CODIGO: ");
 
-        boolean existeUsuario = usuarioCodigoExiste(listaUsuario, codigo);
-
-        if (!existeUsuario) {
+        if (!UsuarioDAO.exist(codigo)) {
 
             String nombre = teclado.getEspecial("NOMBRE: ");
             String apellidos = teclado.get("APELLIDOS: ");
@@ -106,7 +101,7 @@ public class FormularioUsuario {
             usuario.contraseña = contraseñas.toUpperCase();
             usuario.cargo = cargos.toUpperCase();
             listaUsuario.add(usuario);
-//            UsuarioDAO.escribiras(listaUsuario);
+            UsuarioDAO.escribiras(listaUsuario);
             System.out.println("\tProceso Exitoso");
 
         } else {
@@ -127,23 +122,7 @@ public class FormularioUsuario {
         }
     }
 
-    public static boolean usuarioCodigoExiste(List<Usuario> listaUsuarios, String codigoUsuario) {
+    public static void loginUsuario(String cargo) throws IOException {
 
-        for (Usuario usuario : listaUsuarios) {
-            if (usuario.codigo.equals(codigoUsuario)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static boolean usuarioNombreExiste(List<Usuario> listaUsuarios, String nombreUsuario) {
-
-        for (Usuario usuario : listaUsuarios) {
-            if (usuario.codigo.equals(nombreUsuario.toUpperCase())) {
-                return true;
-            }
-        }
-        return false;
     }
 }

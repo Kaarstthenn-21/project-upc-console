@@ -1,6 +1,7 @@
 package front.menu;
 
 
+import front.formularios.FormularioLogin;
 import front.util.ColorLetra;
 import front.util.Pantalla;
 import front.util.Teclado;
@@ -34,9 +35,18 @@ public class MenuLogin {
                 case 1:
                     MenuUsuario.mostrarMenuListarUsuarios();
                     break;
+                case 2:
+                    MenuUsuario.mostrarMenuBuscarUsuarios();
+                    break;
 
+                case 3:
+                    MenuUsuario.mostrarMenuAgregarUsuarios();
+                    break;
+                case 4:
+//
+                    break;
                 case 0:
-//                    FormularioLogin.mostrarFormularioLogin();
+                    FormularioLogin.mostrarFormularioLogin();
                     break;
             }
         } catch (Exception e) {
@@ -73,6 +83,12 @@ public class MenuLogin {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+    }
+
+
+    public static void loginUsuario(String cargo){
+
 
     }
 
